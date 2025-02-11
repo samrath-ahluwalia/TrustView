@@ -1,1 +1,199 @@
-<p>o2-nimage-verification works!</p>
+<!-- face-ai.component.html -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-black py-2 py-lg-3 fixed-top">
+    <div class="container px-4">
+      <a class="navbar-brand fs-4 fw-bold" href="#">TrustView</a>
+    </div>
+  </nav>
+  
+  <section id="hero" class="hero-section bg-black">
+    <div class="container text-center">
+      <div class="hero-content">
+        <h1 class="display-3 text-white mb-4 animate__animated animate__fadeIn">
+          <span>Advanced Facial Analysis</span>
+          <span class="text-primary d-block">Powered by AI</span>
+        </h1>
+        <p class="lead text-light mb-5 animate__animated animate__fadeIn animate__delay-1s">
+          Upload any image and get instant analysis for blur detection, human verification, mask detection, and more.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <section id="features" class="features-section">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-4 text-white">Advanced Facial Analysis Features</h2>
+        <p class="lead text-light">Comprehensive analysis powered by cutting-edge AI technology</p>
+      </div>
+  
+      <div class="row g-4">
+        <!-- Feature cards -->
+        <div class="col-md-4" *ngFor="let feature of features">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i [class]="feature.icon"></i>
+            </div>
+            <h3 class="feature-title">{{feature.title}}</h3>
+            <p class="feature-description">{{feature.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="demo" class="demo-section bg-black">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-4 text-white glow-text">Try Our Facial Analysis Demo</h2>
+        <p class="lead text-light">Experience the power of our AI facial analysis technology</p>
+        
+        <div class="mode-switch mb-4">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn" [class.btn-primary]="!isBulkMode" [class.btn-outline-primary]="isBulkMode" (click)="setMode(false)">
+              Manual Mode
+            </button>
+            <button type="button" class="btn" [class.btn-primary]="isBulkMode" [class.btn-outline-primary]="!isBulkMode" (click)="setMode(true)">
+              Bulk Mode
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo-container">
+        <div class="upload-container" id="upload-container" *ngIf="!isBulkMode"
+             (dragover)="onDragOver($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event)"
+             [class.has-file]="selectedFile">
+          
+          <input type="file" #fileInput id="file-input" class="d-none" 
+                 accept="image/*" (change)="onFileSelected($event)">
+          
+          <div class="upload-content" *ngIf="!previewUrl" (click)="fileInput.click()">
+            <div class="upload-icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <p class="upload-text">
+              <span class="upload-link">Click to upload</span> or drag and drop
+            </p>
+            <p class="upload-hint">PNG, JPG, JPEG up to 5MB</p>
+            <p class="text-danger" *ngIf="uploadError">{{ uploadError }}</p>
+          </div>
+
+          <div class="preview-container" *ngIf="previewUrl">
+            <img [src]="previewUrl" alt="Preview" class="preview-image">
+          </div>
+        </div>
+
+        <!-- Bulk Mode S3 Import Container -->
+        <div class="s3-import-container" *ngIf="isBulkMode">
+          <div class="s3-content" *ngIf="!s3ImagesLoaded">
+            <div class="upload-icon">
+              <i class="fab fa-aws"></i>
+            </div>
+            <h3 class="s3-title">Import Images from AWS S3</h3>
+            <p class="s3-description">Import and analyze multiple images stored in your S3 bucket</p>
+            
+            <div class="s3-config-form" *ngIf="!isLoadingS3">
+              <!-- <div class="form-group">
+                <input type="text" class="form-control" 
+                       [(ngModel)]="s3Config.bucket" 
+                       placeholder="S3 Bucket Name">
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" 
+                       [(ngModel)]="s3Config.prefix" 
+                       placeholder="Prefix (optional)">
+              </div> -->
+              <button class="btn btn-primary mt-4" 
+                      (click)="importFromS3()">
+                <i class="fas fa-cloud-download-alt me-2"></i>Import from S3
+              </button>
+            </div>
+
+            <div class="loading-spinner" *ngIf="isLoadingS3">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-3">Loading images from S3...</p>
+            </div>
+          </div>
+
+          <!-- S3 Images List -->
+          <div class="s3-images-list" *ngIf="s3ImagesLoaded">
+            <div class="selected-files-info">
+              <i class="fas fa-images"></i>
+              <span>{{ s3Images.length }} images found in S3</span>
+            </div>
+            <div class="selected-files-list">
+              <div class="file-item" *ngFor="let image of s3Images">
+                {{ image.key }}
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Manual Mode Analysis Button -->
+        <button class="btn btn-primary analyze-btn" 
+                *ngIf="!isBulkMode && selectedFile && !showAnalysis && !showFaceOutline"
+                (click)="analyzeImage()">
+          Analyze Image
+        </button>
+
+        <!-- Bulk Mode Analysis Button -->
+        <button class="btn btn-primary analyze-btn" 
+                *ngIf="isBulkMode && !showBulkAnalysis && !showFaceOutline"
+                (click)="analyzeBulkImages()">
+          Analyze {{ s3Images.length }} Images
+        </button>
+
+        <!-- Face Outline Overlay -->
+        <div class="face-outline-overlay" *ngIf="showFaceOutline">
+          <div class="face-scan-container">
+            <img src="/loading.webp" class="face-outline" alt="Face Outline">
+            <div class="green-line"></div>
+            
+            <div class="analysis-step-container">
+              <div class="current-step">{{currentAnalysisStep}}</div>
+              <div class="step-indicators">
+                <div *ngFor="let step of analysisSteps" 
+                     class="step-dot"
+                     [ngClass]="{'active': step === currentAnalysisStep}">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analysis Results -->
+        <div class="analysis-results" *ngIf="showBulkAnalysis">
+          <div class="result-card">
+            <h3 class="result-title">Bulk Analysis Results</h3>
+            <p>Successfully analyzed {{ bulkAnalysisResults.length }} images</p>
+            <button class="btn btn-success mt-3" (click)="downloadPdfReport()">
+              <i class="fas fa-file-pdf me-2"></i>Download PDF Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Single Image Analysis Results -->
+        <div class="analysis-results" *ngIf="!isBulkMode && showAnalysis">
+          <div class="result-card">
+            <h3 class="result-title">Analysis Results</h3>
+            <div class="result-item">
+              <span>Blur Detection:</span>
+              <span class="badge bg-success">{{analysisResults.blur}}</span>
+            </div>
+            <div class="result-item">
+              <span>Human Verification:</span>
+              <span class="badge bg-success">{{analysisResults.human}}</span>
+            </div>
+            <div class="result-item">
+              <span>Mask Detection:</span>
+              <span class="badge bg-warning">{{analysisResults.mask}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

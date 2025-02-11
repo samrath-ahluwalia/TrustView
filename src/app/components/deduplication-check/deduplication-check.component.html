@@ -13,12 +13,13 @@
           <span class="d-block">Image Deduplication with</span>
           <span class="d-block text-primary gradient-text animate__animated animate__pulse animate__infinite">Facial Recognition</span>
         </h1>
-        <p class="lead text-gray-300 mx-auto animate__animated animate__fadeIn animate__delay-1s">
-          Efficiently detect and manage duplicate images using advanced facial recognition technology.
-          Get quality scores and confidence metrics in real-time.
+        <p class="lead mt-4 text-light animate__animated animate__fadeIn animate__delay-1s">
+          Analyze historical data to uncover patterns and insights with our advanced AI technology
         </p>
-        <div class="mt-5 d-flex justify-content-center gap-3 animate__animated animate__fadeIn animate__delay-2s">
-          <a href="#demo" class="btn btn-primary btn-lg px-4">Try Demo</a>
+        <div class="mt-5 animate__animated animate__fadeIn animate__delay-2s">
+          <a href="#upload-section" class="btn btn-primary btn-lg px-5" (click)="scrollToUpload($event)">
+            Try Now
+          </a>
         </div>
       </div>
     </div>
@@ -80,40 +81,19 @@
 
   <div class="container">
     <!-- Bulk Upload Section -->
-    <section class="py-5">
+    <section id="upload-section" class="py-5">
       <div class="card bg-dark text-white">
         <div class="card-body">
           <h3 class="gradient-text mb-4 text-center">Bulk Image Upload</h3>
           
-          <div class="upload-area" (click)="triggerBulkUpload()">
-            <input type="file" 
-                   #bulkInput 
-                   (change)="onBulkSelected($event)" 
-                   accept="image/*" 
-                   multiple 
-                   class="d-none">
-            
-            <ng-container *ngIf="!bulkPreviews.length">
-              <i class="fas fa-upload fa-3x text-gray-400"></i>
-              <p class="mt-3">Click to upload multiple images or drag and drop</p>
-            </ng-container>
-            
-            <ng-container *ngIf="bulkPreviews.length">
-              <div class="bulk-preview-grid">
-                <div *ngFor="let preview of bulkPreviews; let i = index" 
-                     class="preview-wrapper position-relative">
-                  <img [src]="preview" class="preview-thumbnail">
-                  <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1" 
-                          (click)="$event.stopPropagation(); removeBulkImage(i)">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-            </ng-container>
+          <div class="upload-area d-flex align-items-center justify-content-center" style="min-height: 200px;">
+            <button class="btn btn-primary btn-lg" (click)="importFromS3()">
+              <i class="fas fa-cloud-upload-alt me-2"></i>Import from AWS S3
+            </button>
           </div>
 
           <div class="text-center mt-4">
-            <button class="btn btn-primary btn-lg" (click)="analyze()" [disabled]="!bulkPreviews.length">
+            <button class="btn btn-primary btn-lg" (click)="analyze()">
               Analyze Images
             </button>
           </div>
@@ -139,12 +119,18 @@
             
             <div class="col-md-6">
               <div class="result-container bg-dark p-4 rounded-lg border border-gray-700 text-center">
-                <h4 class="text-primary mb-3">Maximum Duplicates</h4>
+                <h4 class="text-primary mb-3">Maximum Duplicates of Same Person</h4>
                 <div class="d-flex align-items-baseline justify-content-center">
                   <span class="display-4 fw-bold text-white">{{results.maxDuplicates}}</span>
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button class="btn btn-primary btn-lg" (click)="downloadResultsPDF()">
+              <i class="fas fa-file-pdf me-2"></i>Download Results as PDF
+            </button>
           </div>
         </div>
       </div>
@@ -457,7 +443,7 @@
         <button class="btn btn-primary btn-lg" [disabled]="!canAnalyze" (click)="analyze()" *ngIf="!(mode === 'bulk' && bulkUploadType === 's3')">Analyze Images</button>
       </div>
     </div>
-  </section> -->
+  </section>
 
   <!-- Loading Animation -->
   <div class="face-outline-overlay" *ngIf="showFaceOutline">

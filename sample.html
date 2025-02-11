@@ -1,0 +1,720 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="{{project.meta.ogDescription}}">
+      <meta name="theme-color" content="#ffffff">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="robots" content="{{project.meta.robotsMeta}}">
+      
+      <title>{{project.seoTitle}}</title>
+      <!-- SEO Description -->
+      <meta name="description" content="{{project.seoDescription}}">
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+       <link href="{{fontLink}}" rel="stylesheet">
+       <link href="{{secondaryFontLink}}" rel="stylesheet">
+      
+      <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+      <!-- Performance optimization: Preload critical resources -->
+      <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+      
+      <!-- Header Scripts -->
+      <script id="header-scripts">
+        // This script tag will be replaced with actual scripts.head content
+        if (window.scripts && window.scripts.head) {
+          document.getElementById('header-scripts').outerHTML = window.scripts.head;
+        }
+      </script>
+
+      <!-- Preconnect -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+      <!-- Font stylesheet -->
+
+      <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js"></script>
+
+      <!-- Core CSS -->
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                primary: {
+                  DEFAULT: '{{settings.colors.primary}}',
+                  50: '#f8f8f8',
+                  100: '#e8e8e8', 
+                  200: '#d3d3d3',
+                  300: '#a3a3a3',
+                  400: '#737373',
+                  500: '#525252',
+                  600: '#404040',
+                  700: '#262626',
+                  800: '#171717',
+                  900: '#0a0a0a',
+                  950: '#030303',
+                },
+                secondary: {
+                  DEFAULT: '{{settings.colors.secondary}}',
+                  50: '#f8f8f8',
+                  100: '#e8e8e8',
+                  200: '#d3d3d3', 
+                  300: '#a3a3a3',
+                  400: '#737373',
+                  500: '#525252',
+                  600: '#404040',
+                  700: '#262626',
+                  800: '#171717',
+                  900: '#0a0a0a',
+                  950: '#030303',
+                },
+                accent: {
+                  DEFAULT: '{{settings.colors.accent}}',
+                  50: '#f8f8f8',
+                  100: '#e8e8e8',
+                  200: '#d3d3d3',
+                  300: '#a3a3a3', 
+                  400: '#737373',
+                  500: '#525252',
+                  600: '#404040',
+                  700: '#262626',
+                  800: '#171717',
+                  900: '#0a0a0a',
+                  950: '#030303',
+                },
+              },
+              fontFamily: {
+                sans: ['{{settings.fonts.primary}}', 'Roboto', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                heading: ['{{settings.fonts.secondary}}', 'system-ui', 'sans-serif'],
+                body: ['{{settings.fonts.secondary}}', 'system-ui', 'sans-serif'],
+              },
+              spacing: {
+                '18': '4.5rem',
+                '22': '5.5rem',
+                '30': '7.5rem',
+              },
+              maxWidth: {
+                '8xl': '88rem',
+                '9xl': '96rem',
+              },
+              animation: {
+                'fade-in': 'fadeIn 0.5s ease-in',
+                'fade-out': 'fadeOut 0.5s ease-out',
+                'slide-up': 'slideUp 0.5s ease-out',
+                'slide-down': 'slideDown 0.5s ease-out',
+                'slide-left': 'slideLeft 0.5s ease-out',
+                'slide-right': 'slideRight 0.5s ease-out',
+                'scale-in': 'scaleIn 0.5s ease-out',
+                'scale-out': 'scaleOut 0.5s ease-out',
+                'spin-slow': 'spin 3s linear infinite',
+                'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                'bounce-slow': 'bounce 3s infinite',
+                'float': 'float 3s ease-in-out infinite',
+              },
+              keyframes: {
+                fadeIn: {
+                  '0%': { opacity: '0' },
+                  '100%': { opacity: '1' },
+                },
+                fadeOut: {
+                  '0%': { opacity: '1' },
+                  '100%': { opacity: '0' },
+                },
+                slideUp: {
+                  '0%': { transform: 'translateY(20px)', opacity: '0' },
+                  '100%': { transform: 'translateY(0)', opacity: '1' },
+                },
+                slideDown: {
+                  '0%': { transform: 'translateY(-20px)', opacity: '0' },
+                  '100%': { transform: 'translateY(0)', opacity: '1' },
+                },
+                slideLeft: {
+                  '0%': { transform: 'translateX(20px)', opacity: '0' },
+                  '100%': { transform: 'translateX(0)', opacity: '1' },
+                },
+                slideRight: {
+                  '0%': { transform: 'translateX(-20px)', opacity: '0' },
+                  '100%': { transform: 'translateX(0)', opacity: '1' },
+                },
+                scaleIn: {
+                  '0%': { transform: 'scale(0.9)', opacity: '0' },
+                  '100%': { transform: 'scale(1)', opacity: '1' },
+                },
+                scaleOut: {
+                  '0%': { transform: 'scale(1.1)', opacity: '0' },
+                  '100%': { transform: 'scale(1)', opacity: '1' },
+                },
+                float: {
+                  '0%, 100%': { transform: 'translateY(0)' },
+                  '50%': { transform: 'translateY(-10px)' },
+                },
+              },
+              aspectRatio: {
+                'portrait': '3/4',
+                'landscape': '4/3',
+                'ultrawide': '21/9',
+              },
+            },
+          },
+          variants: {
+            extend: {
+              opacity: ['disabled'],
+              cursor: ['disabled'],
+              backgroundColor: ['active', 'disabled'],
+              textColor: ['active', 'disabled'],
+            },
+          },
+        }
+      });
+      </script>
+
+      <!-- Utilities and Components -->
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js"></script>
+      <script defer src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.45.1/apexcharts.min.js"></script>
+      
+      <!-- Optimized Font Loading -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      
+      <!-- Icons -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" 
+            integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+      <!-- Dynamic Meta Tags -->
+      <meta name="description" content="{{project.meta.ogDescription}}">
+      <meta name="keywords" content="{{project.meta.keywords}}">
+      <meta name="robots" content="{{project.meta.robotsMeta}}">
+      <meta name="google-site-verification" content="{{project.meta.googleVerification}}">
+      <meta name="baidu-verification" content="{{project.meta.baiduVerification}}">
+      <meta name="yandex-verification" content="{{project.meta.yandexVerification}}">
+      <meta name="bing-verification" content="{{project.meta.bingVerification}}">
+      <meta property="og:title" content="{{project.meta.ogTitle}}">
+      <meta property="og:description" content="{{project.meta.ogDescription}}">
+      <meta property="og:image" content="{{project.meta.ogImage}}">
+      <meta property="og:type" content="website">
+      <meta property="og:locale" content="en_US">
+      <meta property="og:site_name" content="{{project.name}}">
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="{{project.meta.ogTitle}}">
+      <meta name="twitter:description" content="{{project.meta.ogDescription}}">
+      <meta name="twitter:image" content="{{project.meta.ogImage}}">
+
+      
+      <link rel="icon" type="image/x-icon" href="{{settings.favicon}}">
+      
+      <style>
+        h1, h2, h3, h4, h5, h6 {
+          font-family: {{settings.fonts.primary}}, system-ui, sans-serif;
+        }
+        body {
+          font-family: {{settings.fonts.secondary}}, system-ui, sans-serif;
+        }
+      </style>
+   </head>
+   <body class="antialiased text-gray-800 min-h-screen flex flex-col">
+      <!-- Skip to main content link for accessibility -->
+      <a href="#main-content" 
+         class="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50 focus:p-4 focus:bg-white focus:text-black">
+         Skip to main content
+      </a>
+
+      <!-- Header -->
+      <header class="relative z-50 bg-white dark:bg-gray-900">
+        <!-- Header content goes here -->
+      </header>
+
+      <!-- Main content area -->
+      <main id="main-content" class="flex-1 relative h-full">
+        <!-- Content will be injected here -->
+      </main>
+
+      <!-- {bodyScripts} -->
+
+   </body>
+</html><element id="790372ad-8da9-40b7-8df3-bf7e8ecd7010" data-section-id="790372ad-8da9-40b7-8df3-bf7e8ecd7010">
+
+
+                
+<div id="root">
+    <nav class="fixed w-full z-50 bg-neutral-900 border-b border-neutral-800" id="el-593prr16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="el-qx9odioh">
+            <div class="flex items-center justify-between h-16" id="el-gum1vzt5">
+                <div class="flex-shrink-0" id="el-pv3opuw4">
+                    <span class="text-white text-xl font-bold" id="el-md6x8vxc">FaceAI</span>
+                </div>
+                <div class="hidden md:block" id="el-5nch1d6o">
+                    <div class="ml-10 flex items-baseline space-x-4" id="el-rjjwvf44">
+                        <div class="system-element-placeholder bg-gray-100 text-gray-600 px-4 py-2 rounded border border-dashed border-gray-300 text-sm font-mono" data-tooltip="This is a system element that will be populated with the navigation menu" id="el-sufoc9ww">
+                [System: Menu will be rendered here]
+              </div>
+                    </div>
+                </div>
+                <div class="md:hidden" id="el-h40ujvz3">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-neutral-800 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="el-2jiwwyfv">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" id="el-nojaxgih"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-neutral-900">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3" id="el-6sbmfwd4">
+                <div class="system-element-placeholder bg-gray-100 text-gray-600 px-4 py-2 rounded border border-dashed border-gray-300 text-sm font-mono" data-tooltip="This is a system element that will be populated with the navigation menu" id="el-o43054hc">
+                [System: Menu will be rendered here]
+              </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="bg-neutral-900 min-h-[70vh] flex items-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20" id="el-tvndda3r">
+            <div class="text-center" id="el-14uclefj">
+                <h1 class="animate__animated animate__fadeIn text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl" id="el-dh1p3ymk">
+                    <span class="block" id="el-13dx8gyv">Advanced Facial Analysis</span>
+                    <span class="block text-blue-500" id="el-fi69xwfl">Powered by AI</span>
+                </h1>
+                <p class="animate__animated animate__fadeIn animate__delay-1s mt-3 max-w-md mx-auto text-base text-gray-300 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl" id="el-4h1rwhz4">
+                    Upload any image and get instant analysis for blur detection, human verification, mask detection, and more.
+                </p>
+                <div class="animate__animated animate__fadeIn animate__delay-2s mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8" id="el-3y68pd16">
+                    <div class="rounded-md shadow" id="el-xe9xdxmu">
+                        
+                    </div>
+                    <div class="mt-3 rounded-md shadow sm:mt-0 sm:ml-3" id="el-px6m8vzg">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+document.getElementById('mobile-menu-button').addEventListener('click', function() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('animate__animated', 'animate__fadeIn');
+    } else {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('animate__animated', 'animate__fadeIn');
+    }
+});
+</script>
+
+              </element><element id="b9398868-7be7-407a-b073-b98091010012" data-section-id="b9398868-7be7-407a-b073-b98091010012">
+
+
+<div id="root">
+    <section id="features" class="py-20 bg-neutral-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl animate__animated animate__fadeIn">
+                    Advanced Facial Analysis Features
+                </h2>
+                <p class="mt-4 text-lg text-gray-300 animate__animated animate__fadeIn animate__delay-1s">
+                    Comprehensive analysis powered by cutting-edge AI technology
+                </p>
+            </div>
+
+            <div class="mt-20 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <div class="relative p-6 bg-neutral-900 rounded-lg hover:transform hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp">
+                    <div class="absolute -top-4 left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="mt-4 text-xl font-semibold text-white">Blur Detection</h3>
+                    <p class="mt-2 text-gray-300">Instantly identify and flag blurry images with precise detection algorithms</p>
+                </div>
+
+                <div class="relative p-6 bg-neutral-900 rounded-lg hover:transform hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="absolute -top-4 left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="mt-4 text-xl font-semibold text-white">Human Verification</h3>
+                    <p class="mt-2 text-gray-300">Accurately distinguish between human and non-human subjects in images</p>
+                </div>
+
+                <div class="relative p-6 bg-neutral-900 rounded-lg hover:transform hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="absolute -top-4 left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="mt-4 text-xl font-semibold text-white">Mask Detection</h3>
+                    <p class="mt-2 text-gray-300">Detect face masks and protective equipment with high accuracy</p>
+                </div>
+
+                <div class="relative p-6 bg-neutral-900 rounded-lg hover:transform hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp">
+                    <div class="absolute -top-4 left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                    </div>
+                    <h3 class="mt-4 text-xl font-semibold text-white">Real-time Processing</h3>
+                    <p class="mt-2 text-gray-300">Get instant results with our optimized processing engine</p>
+                </div>
+
+                <div class="relative p-6 bg-neutral-900 rounded-lg hover:transform hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="absolute -top-4 left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <h3 class="mt-4 text-xl font-semibold text-white">Advanced Security</h3>
+                    <p class="mt-2 text-gray-300">Enterprise-grade security for all your image processing needs</p>
+                </div>
+
+                <div class="relative p-6 bg-neutral-900 rounded-lg hover:transform hover:scale-105 transition-transform duration-300 animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="absolute -top-4 left-4 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+                        </svg>
+                    </div>
+                    <h3 class="mt-4 text-xl font-semibold text-white">Batch Processing</h3>
+                    <p class="mt-2 text-gray-300">Analyze multiple images simultaneously for enhanced efficiency</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</element><element id="dc0792a0-5380-40f1-9548-0887b98b871b" data-section-id="dc0792a0-5380-40f1-9548-0887b98b871b">
+
+
+                
+<div id="root">
+    <section id="demo" class="py-20 bg-gradient-to-b from-neutral-900 to-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+        <div class="inline-block mb-4">
+            <div class="relative">
+                <div class="absolute inset-0 bg-blue-500 blur-[100px] opacity-20 rounded-full"></div>
+                <h2 class="relative text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 sm:text-5xl animate__animated animate__fadeIn">
+                    Try Our Facial Analysis Demo
+                </h2>
+            </div>
+        </div>
+        <p class="mt-4 text-lg text-gray-300 animate__animated animate__fadeIn animate__delay-1s">
+            Experience the power of our AI facial analysis technology
+        </p>
+    </div>
+
+    <div class="max-w-3xl mx-auto">
+        <div class="backdrop-blur-lg bg-neutral-800/50 rounded-2xl p-8 shadow-2xl animate__animated animate__fadeInUp border border-neutral-700">
+            <div id="upload-container" class="border-2 border-dashed border-gray-600 rounded-xl p-8 text-center hover:border-blue-500 transition-all duration-300 cursor-pointer group">
+                <input type="file" id="file-input" class="hidden" accept="image/*">
+                <div id="upload-content">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full transform group-hover:scale-110 transition-transform duration-300"></div>
+                        <svg class="relative mx-auto h-16 w-16 text-gray-400 group-hover:text-blue-400 transition-colors duration-300" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </div>
+                    <p class="mt-6 text-sm text-gray-300">
+                        <span class="font-medium text-blue-400 hover:text-blue-300 transition-colors">Upload image</span> or drag and drop
+                    </p>
+                    <p class="mt-2 text-xs text-gray-400">PNG, JPG, JPEG up to 5MB</p>
+                </div>
+                <div id="preview-container" class="hidden mt-6">
+                    <img id="preview-image" class="max-w-full h-auto mx-auto rounded-xl shadow-lg" src="" alt="Preview">
+                </div>
+            </div>
+
+            <div id="analysis-results" class="hidden mt-8">
+                <div class="bg-neutral-700/50 backdrop-blur rounded-xl p-6 border border-neutral-600">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Analysis Results</h3>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between p-4 bg-neutral-800/50 rounded-lg backdrop-blur">
+                            <span class="text-gray-300">Blur Detection:</span>
+                            <span id="blur-result" class="px-4 py-1.5 rounded-full text-sm font-medium bg-gradient-to-r"></span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-neutral-800/50 rounded-lg backdrop-blur">
+                            <span class="text-gray-300">Human Verification:</span>
+                            <span id="human-result" class="px-4 py-1.5 rounded-full text-sm font-medium bg-gradient-to-r"></span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-neutral-800/50 rounded-lg backdrop-blur">
+                            <span class="text-gray-300">Mask Detection:</span>
+                            <span id="mask-result" class="px-4 py-1.5 rounded-full text-sm font-medium bg-gradient-to-r"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="analyze-btn" class="hidden w-full mt-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-[1.02] focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-neutral-900">
+                Analyze Image
+            </button>
+        </div>
+    </div>
+</div>
+</section>
+</div>
+
+<script>
+const uploadContainer = document.getElementById('upload-container');
+const fileInput = document.getElementById('file-input');
+const previewContainer = document.getElementById('preview-container');
+const previewImage = document.getElementById('preview-image');
+const analyzeBtn = document.getElementById('analyze-btn');
+const analysisResults = document.getElementById('analysis-results');
+const uploadContent = document.getElementById('upload-content');
+
+uploadContainer.addEventListener('click', () => {
+    fileInput.click();
+});
+
+uploadContainer.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadContainer.classList.add('border-blue-500');
+});
+
+uploadContainer.addEventListener('dragleave', () => {
+    uploadContainer.classList.remove('border-blue-500');
+});
+
+uploadContainer.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadContainer.classList.remove('border-blue-500');
+    const file = e.dataTransfer.files[0];
+    handleFile(file);
+});
+
+fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    handleFile(file);
+});
+
+function handleFile(file) {
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewImage.src = e.target.result;
+            previewContainer.classList.remove('hidden');
+            uploadContent.classList.add('hidden');
+            analyzeBtn.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+analyzeBtn.addEventListener('click', () => {
+    analysisResults.classList.remove('hidden');
+    // Simulate analysis results
+    setTimeout(() => {
+        document.getElementById('blur-result').textContent = 'Not Blurry';
+        document.getElementById('blur-result').className = 'px-3 py-1 rounded-full text-sm font-medium bg-green-500 text-white';
+        
+        document.getElementById('human-result').textContent = 'Human Detected';
+        document.getElementById('human-result').className = 'px-3 py-1 rounded-full text-sm font-medium bg-green-500 text-white';
+        
+        document.getElementById('mask-result').textContent = 'No Mask';
+        document.getElementById('mask-result').className = 'px-3 py-1 rounded-full text-sm font-medium bg-yellow-500 text-white';
+    }, 1500);
+});
+</script>
+
+              </element><element id="600bba21-bcc0-463f-8f39-2eabf42f9019" data-section-id="600bba21-bcc0-463f-8f39-2eabf42f9019">
+
+
+                
+<div id="root">
+    
+</div>
+
+              </element><element id="d7c93acb-3cad-417f-804a-356f36705161" data-section-id="d7c93acb-3cad-417f-804a-356f36705161">
+
+
+                
+<div id="root">
+    <section id="usecases" class="py-20 bg-neutral-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="el-bmcjy2db">
+            <div class="text-center mb-16" id="el-xdjlbtre">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl animate__animated animate__fadeIn" id="el-qtj7y6d1">
+                    Use Cases
+                </h2>
+                <p class="mt-4 text-lg text-gray-300 animate__animated animate__fadeIn animate__delay-1s" id="el-p76sn0gs">
+                    Discover how our facial analysis technology can benefit different industries
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3" id="el-0okhx5oc">
+                <div class="bg-neutral-800 rounded-xl p-8 transition-transform duration-300 hover:transform hover:scale-105 animate__animated animate__fadeInUp" id="el-rp7vcp3m">
+                    <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-6" id="el-zbodhqgw">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="el-93wo0e1o">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" id="el-kr7g1mcl"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4" id="el-go7e9lwk">Corporate Security</h3>
+                    <p class="text-gray-300" id="el-8p2269hj">Enhance workplace security by validating employee identities and ensuring proper mask compliance in regulated areas.</p>
+                    <ul class="mt-4 space-y-2 text-gray-300" id="el-n88kc7cs">
+                        <li class="flex items-center" id="el-dxip2y4d">
+                            <svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20" id="el-2t2wx480">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" id="el-kwwr4lzm"></path>
+                            </svg>
+                            Access Control
+                        </li>
+                        <li class="flex items-center" id="el-zbrcv4tv">
+                            <svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20" id="el-ywymut1e">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" id="el-gk776b24"></path>
+                            </svg>
+                            Safety Compliance
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-neutral-800 rounded-xl p-8 transition-transform duration-300 hover:transform hover:scale-105 animate__animated animate__fadeInUp animate__delay-1s" id="el-rjyxgabm">
+                    <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-6" id="el-bkb4ibjk">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="el-m4ujdvu4">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" id="el-9c34s0ns"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4" id="el-pdr6cfp6">Healthcare Facilities</h3>
+                    <p class="text-gray-300" id="el-9dg904hg">Monitor mask compliance and verify identity in medical environments to maintain safety protocols.</p>
+                    <ul class="mt-4 space-y-2 text-gray-300" id="el-nwzhssxa">
+                        <li class="flex items-center" id="el-4qblpztw">
+                            <svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20" id="el-qg344vgn">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" id="el-3k9akysz"></path>
+                            </svg>
+                            PPE Compliance
+                        </li>
+                        <li class="flex items-center" id="el-nwoj3eb4">
+                            <svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20" id="el-hmpnc6go">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" id="el-22lbej3v"></path>
+                            </svg>
+                            Patient Verification
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-neutral-800 rounded-xl p-8 transition-transform duration-300 hover:transform hover:scale-105 animate__animated animate__fadeInUp animate__delay-2s" id="el-ke32t6v6">
+                    <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-6" id="el-wna9uail">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="el-4bpjhi1h">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" id="el-o6vw9po7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4" id="el-4sxc30y1">Financial Services</h3>
+                    <p class="text-gray-300" id="el-bb6o61ov">Secure customer verification for banking services and prevent fraud through identity validation.</p>
+                    <ul class="mt-4 space-y-2 text-gray-300" id="el-eargnu5t">
+                        <li class="flex items-center" id="el-716uwgrj">
+                            <svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20" id="el-kc9r4x6q">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" id="el-yxtk9i0v"></path>
+                            </svg>
+                            KYC Verification
+                        </li>
+                        <li class="flex items-center" id="el-gyojgotv">
+                            <svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20" id="el-0ncdfbfk">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" id="el-9puofluo"></path>
+                            </svg>
+                            Fraud Prevention
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center" id="el-eep07zix">
+                
+            </div>
+        </div>
+    </section>
+</div>
+
+              </element><element id="ecc3bdee-2b3f-4ade-8cc7-fc321f70897e" data-section-id="ecc3bdee-2b3f-4ade-8cc7-fc321f70897e">
+
+
+                
+<div id="root">
+    
+</div>
+
+              </element><element id="6bb28d87-f325-48a0-b781-6ffce6f8efd1" data-section-id="6bb28d87-f325-48a0-b781-6ffce6f8efd1">
+
+
+                
+<div id="root">
+    
+</div>
+
+              </element><element id="473828d6-2e76-4acb-aa9e-c1098bf8b759" data-section-id="473828d6-2e76-4acb-aa9e-c1098bf8b759">
+
+
+                
+<div id="root">
+    
+</div>
+
+<script>
+document.querySelectorAll('.faq-item button').forEach(button => {
+    button.addEventListener('click', () => {
+        const faqItem = button.parentElement;
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('.faq-icon');
+        
+        // Toggle current item
+        content.classList.toggle('hidden');
+        icon.classList.toggle('rotate-180');
+        
+        // Close other items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            if (item !== faqItem) {
+                item.querySelector('.faq-content').classList.add('hidden');
+                item.querySelector('.faq-icon').classList.remove('rotate-180');
+            }
+        });
+    });
+});
+</script>
+
+              </element><element id="d8e76249-7019-4520-91bc-0f32f1f6b995" data-section-id="d8e76249-7019-4520-91bc-0f32f1f6b995">
+
+
+                
+<div id="root">
+    
+</div>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Add your form submission logic here
+    alert('Thank you for your message. We will get back to you soon!');
+    this.reset();
+});
+</script>
+
+              </element><element id="15dc4d34-c3d8-484f-ac2f-311c35d3aab5" data-section-id="15dc4d34-c3d8-484f-ac2f-311c35d3aab5">
+
+
+                
+<div id="root">
+    
+</div>
+
+<script>
+// Add current year to footer
+document.querySelector('.text-center').innerHTML = document.querySelector('.text-center').innerHTML.replace('', new Date().getFullYear());
+</script>
+
+              </element>
+            <div id="page_complete">
+            <script>
+                console.log('Page complete');
+            </script>
+            </body>
+            </html>
+          

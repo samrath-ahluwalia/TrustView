@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { jsPDF } from 'jspdf';
 
 interface ManualResult {
   id: number;
@@ -21,7 +22,7 @@ interface Results {
   templateUrl: './twin-detection.component.html',
   styleUrl: './twin-detection.component.css'
 })
-export class TwinDetectionComponent implements OnInit {
+export class TwinDetectionComponent {
   features = [
     {
       icon: 'fas fa-dna',
@@ -56,43 +57,53 @@ export class TwinDetectionComponent implements OnInit {
   ];
 
   analysisSteps: string[] = [
-    'Preprocessing',
-    'Feature Extraction',
-    'Model Inference', 
-    'Post-processing',
-    'Similarity Scoring',
-    'Result Generation'
+    'Initializing Face Detection',
+    'Analyzing Facial Features',
+    'Comparing Images',
+    'Generating Results'
   ];
 
   @ViewChild('referenceInput') referenceInput!: ElementRef;
   @ViewChild('comparisonInput') comparisonInput!: ElementRef;
   
   mode: 'manual' | 'bulk' = 'manual';
-  referencePreview: string = '';
+  referencePreview: string | null = null;
   comparisonPreviews: string[] = [];
-  showResults: boolean = false;
+  showResults = false;
   isProcessing: boolean = false;
   currentAnalysisStep: string = '';
-  manualResults: ManualResult[] = [];
+  manualResults: Array<{
+    similarity: number;
+    matched: boolean;
+    imageUrl: string;
+  }> = [];
   
   results = {
     totalMatches: 0,
     confidenceScore: 0
   };
 
+  sameNameMatches = 0;
+  differentNameMatches = 0;
+
   constructor() {}
 
-  ngOnInit(): void {}
-
   getSimilarityColor(similarity: number): string {
-    if (similarity >= 90) return 'bg-success';
-    if (similarity >= 70) return 'bg-warning';
+    if (similarity >= 80) return 'bg-success';
+    if (similarity >= 60) return 'bg-warning';
     return 'bg-danger';
   }
 
   setMode(mode: 'manual' | 'bulk'): void {
     this.mode = mode;
-    this.resetAll();
+    this.resetState();
+  }
+
+  resetState(): void {
+    this.referencePreview = null;
+    this.comparisonPreviews = [];
+    this.showResults = false;
+    this.manualResults = [];
   }
 
   triggerReferenceUpload(): void {
@@ -126,7 +137,7 @@ export class TwinDetectionComponent implements OnInit {
   }
 
   clearReference(): void {
-    this.referencePreview = '';
+    this.referencePreview = null;
   }
 
   removeComparisonImage(index: number): void {
@@ -137,86 +148,68 @@ export class TwinDetectionComponent implements OnInit {
     if (this.mode === 'manual') {
       return !!this.referencePreview && this.comparisonPreviews.length > 0;
     }
-    return true; // For bulk mode, we'll validate after S3 selection
-  }
-
-  resetAll(): void {
-    this.referencePreview = '';
-    this.comparisonPreviews = [];
-    this.showResults = false;
+    return true;
   }
 
   async analyze(): Promise<void> {
     this.isProcessing = true;
     this.showResults = false;
-  
+
     // Simulate analysis steps
     for (const step of this.analysisSteps) {
       this.currentAnalysisStep = step;
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Each step takes 1 second
+      // Trigger animation
+      const animationEvent = new CustomEvent('animationTriggered', { detail: step });
+      window.dispatchEvent(animationEvent);
     }
   
     if (this.mode === 'manual') {
       // Generate results for each comparison image
-      this.manualResults = this.comparisonPreviews.map((_, index) => {
-        const similarity = Math.floor(Math.random() * 31) + 70; // Random score between 70-100
-        return {
-          id: index + 1,
-          similarity: similarity,
-          matched: similarity >= 85
-        };
-      });
-  
+      this.manualResults = this.comparisonPreviews.map(preview => ({
+        similarity: Math.floor(Math.random() * 100),
+        matched: Math.random() > 0.5,
+        imageUrl: preview
+      }));
+
       // Update summary statistics
-      this.results = {
-        totalMatches: this.manualResults.filter(r => r.matched).length,
-        confidenceScore: Math.floor(this.manualResults.reduce((acc, curr) => acc + curr.similarity, 0) / this.manualResults.length)
-      };
-    } else {
-      // Bulk mode results simulation
-      this.results = {
-        totalMatches: Math.floor(Math.random() * 100),
-        confidenceScore: Math.floor(Math.random() * 20) + 80
-      };
+      this.results.totalMatches = this.manualResults.filter(r => r.matched).length;
+    } else if (this.mode === 'bulk') {
+      // Generate random statistics for bulk mode
+      this.sameNameMatches = Math.floor(Math.random() * 50) + 1; // 1 to 50
+      this.differentNameMatches = Math.floor(Math.random() * 30) + 1; // 1 to 30
     }
-    
+
     this.isProcessing = false;
     this.showResults = true;
   }
 
-  uploadFromS3(): void {
-    // TO DO: Implement S3 upload logic
-    console.log('Initiating S3 upload...');
-    // Example implementation:
-    // this.s3Service.selectBucket()
-    //   .then(response => {
-    //     // Handle successful bucket selection
-    //     this.analyze();
-    //   })
-    //   .catch(error => {
-    //     console.error('Error accessing S3:', error);
-    //   });
-  }
-  
-  downloadResults(): void {
-    // Create a JSON blob of the results
-    const resultsData = {
-      timestamp: new Date().toISOString(),
-      mode: this.mode,
-      results: this.results,
-      detailedResults: this.mode === 'manual' ? this.manualResults : undefined
-    };
+  uploadFromS3(){}
 
-    const blob = new Blob([JSON.stringify(resultsData, null, 2)], { type: 'application/json' });
-    const url = window.URL.createObjectURL(blob);
+  processS3Images(){}
+
+  downloadResults(): void {
+    // Create a new jsPDF instance
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
     
-    // Create and trigger download
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `twin-detection-results-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    // Add title
+    doc.setFontSize(20);
+    doc.text('Historical Data Analysis Results', pageWidth/2, 20, { align: 'center' });
+    
+    // Add timestamp
+    doc.setFontSize(12);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, pageWidth/2, 30, { align: 'center' });
+    
+    // Add match statistics
+    doc.setFontSize(16);
+    doc.text('Match Statistics', pageWidth/2, 50, { align: 'center' });
+    
+    doc.setFontSize(14);
+    doc.text(`Matches with Same Name: ${this.sameNameMatches}`, 20, 70);
+    doc.text(`Matches with Different Name: ${this.differentNameMatches}`, 20, 85);
+    
+    // Save the PDF
+    doc.save('historical-data-analysis-results.pdf');
   }
 }

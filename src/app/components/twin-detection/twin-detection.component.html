@@ -122,49 +122,141 @@
     </div>
 
     <!-- Analysis Button -->
-    <div class="text-center mt-4">
-      <button class="btn btn-primary btn-lg" 
-              (click)="analyze()" 
-              [disabled]="!canAnalyze()">
+    <div class="text-center mt-5 mb-5">
+      <button class="btn btn-primary analyze-btn px-5 py-3"
+              [disabled]="!canAnalyze()"
+              (click)="analyze()">
+        <i class="fas fa-search me-2"></i>
         Analyze Images
       </button>
     </div>
 
     <!-- Results Section -->
-    <div *ngIf="showResults" class="mt-5">
+    <div *ngIf="showResults" class="results-section mt-5">
       <div class="card bg-dark text-white">
         <div class="card-body">
-          <h3 class="gradient-text mb-4 text-center">Analysis Results</h3>
-          
+          <div *ngIf="isProcessing" class="processing-overlay">
+            <div class="face-scan-container">
+              <img src="/twin.png" alt="Face Outline" class="face-outline">
+              <div class="green-line"></div>
+              <div class="analysis-step-container">
+                <div class="current-step">{{currentAnalysisStep}}</div>
+                <div class="step-indicators">
+                  <div *ngFor="let step of analysisSteps" 
+                       class="step-dot"
+                       [class.active]="step === currentAnalysisStep">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Manual Mode Results -->
           <div *ngIf="mode === 'manual'">
             <!-- Summary Statistics -->
             <div class="row justify-content-center mb-5">
               <div class="col-md-6">
-                <div class="result-container bg-dark p-4 rounded-lg border border-gray-700 text-center">
-                  <h4 class="text-primary mb-3">Duplicates Found</h4>
-                  <div class="display-4 fw-bold text-white">{{results.totalMatches}}</div>
+                <div class="result-container">
+                  <h4>Duplicates Found</h4>
+                  <div class="display-4">{{results.totalMatches}}</div>
                 </div>
               </div>
             </div>
 
             <!-- Detailed Results -->
             <div class="comparison-results-grid">
-              <!-- ... rest of the manual results display remains the same ... -->
+              <div *ngFor="let result of manualResults; let i = index" 
+                   class="comparison-result-item">
+                <div class="d-flex align-items-start gap-4">
+                  <div class="comparison-image-container">
+                    <img [src]="result.imageUrl" 
+                         class="img-fluid" 
+                         [alt]="'Comparison image ' + (i + 1)">
+                  </div>
+                  
+                  <div class="metrics-container">
+                    <div class="mb-4">
+                      <h5 class="text-gray-300">Similarity Score</h5>
+                      <div class="progress">
+                        <div class="progress-bar" 
+                             [ngClass]="getSimilarityColor(result.similarity)"
+                             role="progressbar" 
+                             [style.width]="result.similarity + '%'"
+                             [attr.aria-valuenow]="result.similarity" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                          {{result.similarity}}%
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h5 class="text-gray-300">Match Status</h5>
+                      <span class="badge" 
+                            [class.bg-success]="result.matched" 
+                            [class.bg-danger]="!result.matched">
+                        <i class="fas" [class.fa-check]="result.matched" [class.fa-times]="!result.matched"></i>
+                        {{result.matched ? 'Matched' : 'Not Matched'}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Bulk Mode Results -->
-          <div *ngIf="mode === 'bulk'" class="text-center">
-            <button class="btn btn-primary btn-lg" (click)="downloadResults()">
-              <i class="fas fa-download me-2"></i>Download Results
-            </button>
+          <div *ngIf="mode === 'bulk'" class="bulk-results">
+            <h4 class="text-center mb-4">Bulk Analysis Results</h4>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="result-container mb-4">
+                  <h5 class="text-center">Matches with Same Name</h5>
+                  <div class="display-4 text-center text-success">{{sameNameMatches}}</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="result-container mb-4">
+                  <h5 class="text-center">Matches with Different Name</h5>
+                  <div class="display-4 text-center text-warning">{{differentNameMatches}}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-primary btn-lg px-5" (click)="downloadResults()">
+                <i class="fas fa-download me-2"></i>Download Results PDF
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <!-- Processing Overlay -->
+      <div *ngIf="isProcessing" class="processing-overlay">
+        <div class="face-scan-container">
+          <img src="/twin.png" alt="Face Outline" class="face-outline">
+          <div class="green-line"></div>
+          <div class="analysis-step-container">
+            <div class="current-step">{{currentAnalysisStep}}</div>
+            <div class="step-indicators">
+              <div *ngFor="let step of analysisSteps" 
+                   class="step-dot"
+                   [class.active]="step === currentAnalysisStep">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <section id="features" class="py-5 bg-black text-white">
   <div class="container">
@@ -186,20 +278,3 @@
     </div>
   </div>
 </section>
-
-<!-- Processing Overlay -->
-<div *ngIf="isProcessing" class="processing-overlay">
-  <div class="face-scan-container">
-    <img src="/twin.png" alt="Face Outline" class="face-outline">
-    <div class="green-line"></div>
-    <div class="analysis-step-container">
-      <div class="current-step">{{currentAnalysisStep}}</div>
-      <div class="step-indicators">
-        <div *ngFor="let step of analysisSteps" 
-             class="step-dot"
-             [class.active]="step === currentAnalysisStep">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>

@@ -117,7 +117,28 @@ export class DeduplicationCheckComponent implements OnInit {
     return 'bg-danger';
   }
 
-  
+  importFromS3(){
+    console.log("Initiating S3 upload...");
+  }
+
+  scrollToUpload(event: Event) {
+    event.preventDefault();
+    const element = document.getElementById('upload-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  downloadResultsPDF() {
+    // Create a link element
+    const link = document.createElement('a');
+    link.href = '/De-dup4.pdf';  // Assuming the PDF is in the assets folder
+    link.download = 'deduplication-results.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   private initializeResultsContainers(): void {
     // Initialize empty results arrays
     this.manualResults = [];
