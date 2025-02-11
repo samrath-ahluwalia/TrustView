@@ -1,0 +1,157 @@
+.Image-Container{
+    height: 100dvh;
+}
+
+img{
+    max-width: 100%;
+    height: auto;
+}
+.feature-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    height: 100%;  /* Makes all cards fill their container height */
+    min-height: 260px;  /* Sets a minimum height for all cards */
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    outline: 2px solid purple;
+}
+
+.icon-box {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* Optional: If you want to ensure the paragraphs have consistent height */
+.feature-card p {
+    min-height: 72px;  /* Adjust this value based on your needs */
+    margin-bottom: 0;
+}
+
+
+.bg-purple{
+    background-color:blueviolet;
+}
+
+.try-now-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(186, 85, 211, 0.9);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+.try-now-btn:hover {
+    background-color: rgba(186, 85, 211, 1);
+}
+.navbar {
+    font-size: 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    background-color: #000 !important;
+}
+
+.timeline-container {
+    padding: 20px 0;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background-color: #0d6efd;
+    top: 0;
+  }
+
+  .timeline-point {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .point-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #0d6efd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    z-index: 1;
+    position: relative;
+  }
+
+  .timeline-item {
+    position: relative;
+  }
+
+  @media (max-width: 768px) {
+    .timeline-line {
+      left: 20px;
+    }
+    
+    .timeline-item {
+      padding-left: 50px;
+    }
+    
+    .timeline-point {
+      position: absolute;
+      left: 0;
+    }
+  }
+
+  .bg-black {
+    background-color: #000;
+  }
+  
+  .text-primary {
+    color: #4285f4 !important;
+  }
+  
+  .bg-dark {
+    background-color: #1a1a1a !important;
+  }
+  
+  /* Responsive navbar spacer using rem units */
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .navbar-spacer {
+      padding-top: 3.5rem;
+    }
+  }
+  .min-dvh-80 {
+    min-height: 80dvh;
+  }
+  .grid-card {
+    transition: box-shadow 0.3s ease-in-out; /* Smooth transition */
+}
+
+.grid-card:hover {
+    box-shadow: 0 0 20px rgba(243, 240, 240, 0.8); /* Softer glow with transparency */
+}
+
+
+
+  

@@ -1,0 +1,360 @@
+/* Global Styles */
+body {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Minimum Viewport Height */
+.min-vh-70 {
+  min-height: 70vh;
+}
+
+/* Divider Styles */
+.divider {
+  width: 100px;
+  height: 4px;
+  margin: 1rem auto;
+}
+
+/* Icon Circle Styles */
+.icon-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 24px;
+  color: white;
+}
+
+/* Background Color Utility */
+.bg-darker {
+  background-color: #000d21;
+}
+
+/* Gradient Text Effect */
+.gradient-text {
+  background: linear-gradient(45deg, #0dcaf0, #0d6efd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Image Preview Styles */
+.img-preview {
+  max-width: 100%;
+  max-height: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+
+.comparison-image-container {
+  min-width: 200px;
+  max-width: 200px;
+}
+
+.comparison-image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.metrics-container {
+  flex: 1;
+}
+
+.progress {
+  height: 25px;
+  background-color: #1a1a1a;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.5s ease;
+}
+
+.comparison-result-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comparison-result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.badge {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.badge i {
+  font-size: 0.8rem;
+}
+
+/* Upload Area Styles */
+.upload-area {
+  border: 2px solid #a5a5a5;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.upload-area:hover {
+  border-color: #1e90ff;
+}
+
+/* Card Styles */
+.card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: #1a1a1a;
+  border-color: #333;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+/* Navbar Styles */
+.navbar {
+  font-size: 1.5rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  background-color: #000 !important;
+}
+
+/* Upload Button Styles */
+.upload-btn {
+  background: linear-gradient(135deg, #1e90ff, #00bfff);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.upload-btn:hover {
+  box-shadow: 0 0 20px rgba(30, 144, 255, 0.8), 0 0 30px rgba(0, 191, 255, 0.8);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+/* Date Input Styles */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Processing Overlay Styles */
+.processing-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Face Scan Container Styles */
+.face-scan-container {
+  position: relative;
+  width: 300px;
+  max-width: 90%;
+  height: 400px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.face-outline {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.green-line {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: limegreen;
+  animation: scan 3s linear infinite;
+  opacity: 0.8;
+}
+
+/* Scanning Animation */
+@keyframes scan {
+  0% {
+    top: -4px;
+  }
+  50% {
+    top: 100%;
+  }
+  100% {
+    top: -4px;
+  }
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Analysis Step Container Styles */
+.analysis-step-container {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.current-step {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.step-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.step-dot {
+  width: 12px;
+  height: 12px;
+  background-color: #333;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.step-dot.active {
+  background-color: limegreen;
+}
+
+/* Advanced Face Scan Styling */
+.face-scan-container {
+  width: 100%;
+  max-width: 500px;
+  height: 500px;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(30, 144, 255, 0.3);
+  border-radius: 10px;
+}
+
+.face-outline {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.green-line {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(
+    to right, 
+    transparent, 
+    limegreen, 
+    limegreen, 
+    transparent
+  );
+  animation: scan 3s linear infinite;
+  z-index: 2;
+  box-shadow: 0 0 20px limegreen;
+}
+
+/* Enhanced Scanning Animation */
+@keyframes scan {
+  0%, 100% {
+    top: -10px;
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+  50% {
+    top: calc(100% + 10px);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    height: 70px;
+    font-size: 1.2rem;
+  }
+
+  .face-scan-container {
+    height: 300px;
+  }
+
+  .upload-area {
+    height: 200px;
+  }
+}
+

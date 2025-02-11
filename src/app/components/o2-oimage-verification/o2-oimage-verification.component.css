@@ -1,0 +1,482 @@
+.navbar {
+    font-size: 1.5rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    background-color: #000 !important;
+}
+
+.fullscreen-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #007bff;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+img{
+    max-width: 100%;
+    height: auto;
+}
+
+.bg-darker {
+    background-color: #09112a;
+  }
+
+  .gradient-text {
+    background: linear-gradient(45deg, #4a90e2, #9b51e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .upload-box {
+    background-color: #181c24;        /* Updated background color */
+    width: 100;                      /* Full width within the column */
+    aspect-ratio: 1 / 0.75;              /* Makes the box square */
+    border: 2px dashed white;         /* Dashed white border */
+    border-radius: 15px;              /* Rounded corners */
+    transition: all 0.3s ease-in-out; /* Smooth transition for hover */
+    cursor: pointer;                  /* Pointer cursor on hover */
+    position: relative;               /* For button positioning */
+  }
+  
+  .upload-box:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); /* Glowing effect on hover */
+    transform: scale(1.02);                       /* Slight scaling for interactivity */
+  }
+  
+  .upload-content {
+    pointer-events: none; /* Prevent click interference with upload trigger */
+  }
+  
+  .ipcolor {
+    color: white;
+    background-color: transparent;
+    border: none;
+  }
+  
+
+  .plus-icon {
+    font-size: 2rem;
+    color: #4a90e2;
+  }
+
+  .clear-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+
+  .compare-btn {
+    background-color: #007bff; /* Primary blue */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.6); /* Initial glow */
+    animation: pulseShadow 2s infinite alternate ease-in-out;
+  }
+  
+  /* Dancing Shadow Animation */
+  @keyframes pulseShadow {
+    0% {
+      box-shadow: 0 0 15px rgba(0, 123, 255, 0.6), 0 0 30px rgba(0, 123, 255, 0.4);
+      transform: translateY(0);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(0, 123, 255, 0.9), 0 0 45px rgba(0, 123, 255, 0.7);
+      transform: translateY(-3px);
+    }
+    100% {
+      box-shadow: 0 0 15px rgba(0, 123, 255, 0.6), 0 0 30px rgba(0, 123, 255, 0.4);
+      transform: translateY(0);
+    }
+  }
+  
+  /* Glowing Outline on Hover */
+  .compare-btn:hover {
+    background-color: #0056b3; /* Slightly darker blue */
+    box-shadow: 0 0 40px rgba(0, 123, 255, 1), 0 0 60px rgba(0, 123, 255, 0.8);
+    transform: scale(1.05);
+  }
+
+  .compare-btn:disabled {
+    opacity: 0.6;
+  }
+
+  .results-section {
+    background-color: #151923;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  /* Common Style for Score Boxes */
+.score-box {
+    background: rgba(0, 0, 0, 0.6); /* Subtle dark background */
+    border-radius: 15px;
+    padding: 20px;
+    transition: all 0.4s ease-in-out;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Similarity Score Hover - Blue Glow */
+  .similarity-box:hover {
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.3), rgba(0, 123, 255, 0.1));
+    box-shadow: 0 0 25px rgba(0, 123, 255, 0.8); /* Blue Glow */
+    transform: scale(1.05);
+  }
+  
+  /* Confidence Level Hover - Green Glow */
+  .confidence-box:hover {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.3), rgba(40, 167, 69, 0.1));
+    box-shadow: 0 0 25px rgba(40, 167, 69, 0.8); /* Green Glow */
+    transform: scale(1.05);
+  }
+  
+  /* Text Smooth Transition */
+  .score-box h3,
+  .score-box p {
+    transition: color 0.3s ease;
+  }
+  
+  .score-box:hover h3,
+  .score-box:hover p {
+    color: #fff; /* White text on hover for better contrast */
+  }
+
+  /* Additional styles for the navbar and container */
+  .navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .Image-Container {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .Image-Container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .comparison-container {
+    background-color: #1a1f2e;  /* Dark background for contrast */
+    border-radius: 30px;     /* Smooth rounded corners */
+    padding: 20px;           /* Space inside the container */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);  /* Cyan glow */
+    transition: box-shadow 0.4s ease;            /* Smooth transition */
+  }
+  
+  /* Brighter glow on hover */
+  .comparison-container:hover {
+    box-shadow: 0 0 50px rgba(0, 255, 255, 0.9);  /* Stronger glow effect */
+    transform: scale(1.01);                      /* Slight zoom effect */
+  }
+
+  .upload-box {
+    border: 1px dashed  rgba(34, 58, 121, 0.9);;       /* White dashed border */
+    border-radius: 15px;            /* Rounded corners */
+    transition: box-shadow 0.4s ease, transform 0.4s ease;  /* Smooth hover transition */
+    cursor: pointer; 
+    background-color: #1c2c34;               
+  }
+  
+.upload-box:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);  /* Glowing effect */
+    transform: scale(1.02);                        /* Slight zoom-in effect */
+  }
+
+  .progress {
+    height: 20px;
+    background-color: #343a40; /* Dark background */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Glow effect */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .progress-bar {
+    font-weight: bold;
+    transition: width 0.1s ease-in-out;
+  }
+  
+/* Fullscreen Overlay */
+.face-outline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Sample Face Container */
+.face-outline {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.3)
+  ), url('/TFL.png') no-repeat center/cover;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(0, 255, 234, 0.8);
+  overflow: hidden;
+  animation: pulse 2s infinite alternate ease-in-out;
+}
+
+/* Grid Pattern Overlay */
+.face-outline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 255, 234, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 234, 0.2) 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: gridMove 20s linear infinite;
+}
+
+/* Scanning Line Animation */
+/* Update the Scanning Line Animation */
+.scanning-line {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 255, 0, 0.9);
+  box-shadow: 
+    0 0 10px rgba(0, 255, 0, 0.8),
+    0 0 20px rgba(0, 255, 0, 0.6),
+    0 0 30px rgba(0, 255, 0, 0.4);
+  animation: scanUpDown 4s linear infinite;
+}
+
+/* New Up and Down Scanning Motion */
+@keyframes scanUpDown {
+  0% {
+    top: 110%;
+    transform: translateY(0);
+  }
+  45% {
+    top: -10%;
+    transform: translateY(0);
+  }
+  50% {
+    top: -10%;
+    transform: translateY(0);
+  }
+  95% {
+    top: 110%;
+    transform: translateY(0);
+  }
+  100% {
+    top: 110%;
+    transform: translateY(0);
+  }
+}
+
+/* Grid Movement Animation */
+@keyframes gridMove {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(20px);
+  }
+}
+
+/* Pulsing Effect */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(0, 255, 234, 0.6);
+  }
+  100% {
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(0, 255, 234, 1);
+  }
+}
+
+/* Scanning Motion */
+@keyframes scan {
+  0% {
+    top: -10%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
+/* Fade In Effect */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.analysis-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.analysis-step-container {
+  text-align: center;
+  color: white;
+}
+
+.current-step {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  min-height: 1.75rem;
+  color: #00fff0;
+  text-shadow: 0 0 10px rgba(0, 255, 240, 0.6);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.step-indicators {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease-in-out;
+}
+
+.step-dot.active {
+  background-color: #00fff0;
+  box-shadow: 0 0 10px rgba(0, 255, 240, 0.8);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bg-black {
+  background-color: #000;
+}
+
+.bg-darkblue {
+  background-color: #1a1a2e;
+}
+
+.bg-darker {
+  background-color: #16213e;
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #007bff, #00ff88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mode-switch {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.mode-btn {
+  padding: 0.5rem 2rem;
+  border: 2px solid #007bff;
+  background: transparent;
+  color: #007bff;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.mode-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+.mode-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.upload-box {
+  background-color: #1e1e30;
+  border: 2px dashed #2a2a40;
+  border-radius: 10px;
+  padding: 2rem;
+  min-height: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-box:hover {
+  border-color: #007bff;
+  transform: translateY(-2px);
+}
+
+.compare-btn {
+  background: linear-gradient(45deg, #007bff, #00ff88);
+  border: none;
+  padding: 0.75rem 2.5rem
+}

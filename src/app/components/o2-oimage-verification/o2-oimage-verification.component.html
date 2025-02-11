@@ -1,0 +1,154 @@
+<!-- face-recognition.component.html -->
+<nav class="navbar navbar-dark bg-black px-3 sticky-top">
+  <a class="navbar-brand fw-bold ms-3 fs-2" href="#">TrustView</a>
+</nav>
+
+<div class="bg-black">
+  <div class="Image-Container mt-5">
+    <img src="fr.jpg">
+  </div>
+
+  <div class="container-fluid bg-darkblue text-light pt-5 w-100 pb-5">
+    <div class="row justify-content-center">
+      <div class="col-md-10 text-center">
+        <h1 class="gradient-text mb-2 fs-2">Try Our Facial Recognition Demo</h1>
+        <p class="text-white mb-4">Experience the power of AI - Compare faces instantly</p>
+
+        <!-- Mode Switch -->
+        <div class="mode-switch mb-4">
+          <button class="mode-btn" [class.active]="mode === 'manual'" (click)="setMode('manual')">Manual Mode</button>
+          <button class="mode-btn" [class.active]="mode === 'bulk'" (click)="setMode('bulk')">Bulk Mode</button>
+        </div>
+
+        <!-- Manual Mode -->
+        <div class="comparison-container bg-darker p-4 rounded-3" *ngIf="mode === 'manual'">
+          <div class="row g-4 justify-content-center">
+            <!-- First Image Upload -->
+            <div class="col-md-4 mb-4 me-3">
+              <div class="upload-box d-flex flex-column justify-content-center align-items-center" (click)="fileInput1.click()">
+                <input type="file" class="ipcolor" (change)="onFileChange($event, 'first')" hidden #fileInput1>
+                
+                <div class="upload-content text-center" *ngIf="!firstImagePreview">
+                  <span class="fs-1 fw-bold text-light">+</span>
+                  <p class="text-secondary mt-2">Upload First Image</p>
+                </div>
+            
+                <img *ngIf="firstImagePreview" [src]="firstImagePreview" class="img-fluid rounded" style="max-height: 200px;" />
+            
+                <button class="btn btn-sm btn-outline-light mt-2" *ngIf="firstImagePreview" (click)="clearImage('first', $event)">
+                  Clear Image
+                </button>
+              </div>
+            </div>
+            
+            <!-- Second Image Upload -->
+            <div class="col-md-4 mb-4 ms-3">
+              <div class="upload-box d-flex flex-column justify-content-center align-items-center" (click)="fileInput2.click()">
+                <input type="file" class="ipcolor" (change)="onFileChange($event, 'second')" hidden #fileInput2>
+                
+                <div class="upload-content text-center" *ngIf="!secondImagePreview">
+                  <span class="fs-1 fw-bold text-light">+</span>
+                  <p class="text-secondary mt-2">Upload Second Image</p>
+                </div>
+            
+                <img *ngIf="secondImagePreview" [src]="secondImagePreview" class="img-fluid rounded" style="max-height: 200px;" />
+            
+                <button class="btn btn-sm btn-outline-light mt-2" *ngIf="secondImagePreview" (click)="clearImage('second', $event)">
+                  Clear Image
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-4">
+            <button class="compare-btn" [disabled]="!firstImage || !secondImage || isProcessing" (click)="compareFaces()">
+              Compare Faces
+            </button>
+          </div>
+        </div>
+
+        <!-- Bulk Mode -->
+        <div class="comparison-container bg-darker p-4 rounded-3" *ngIf="mode === 'bulk'">
+          <div class="s3-config mb-4">
+            <!-- <h3 class="text-primary mb-3">S3 Configuration</h3> -->
+            <!-- <div class="row g-3 justify-content-center">
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Access Key ID" [(ngModel)]="s3Config.accessKeyId">
+              </div>
+              <div class="col-md-6">
+                <input type="password" class="form-control" placeholder="Secret Access Key" [(ngModel)]="s3Config.secretAccessKey">
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Bucket Name" [(ngModel)]="s3Config.bucketName">
+              </div>
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Region" [(ngModel)]="s3Config.region">
+              </div>
+            </div> -->
+            <button class="compare-btn mt-4" (click)="processS3Images()" [disabled]="isProcessing">
+              Process S3 Images
+            </button>
+          </div>
+        </div>
+
+        <!-- Results Section for Manual Mode -->
+        <div class="results-section mt-4" *ngIf="mode === 'manual' && similarityScore > 0">
+          <div class="row g-4 justify-content-center">
+            <div class="col-md-5">
+              <div class="score-box similarity-box text-center">
+                <p class="text-secondary mb-2">Similarity Score</p>
+                <h3 class="text-primary">{{similarityScore}}%</h3>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="score-box confidence-box text-center">
+                <p class="text-secondary mb-2">Match Status</p>
+                <h3 class="mt-2" [ngClass]="{'text-success': similarityScore >= 8, 'text-danger': similarityScore < 8}">
+                  {{similarityScore >= 8 ? 'Match' : 'No Match'}}
+                </h3>                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Section for Bulk Mode -->
+        <div class="results-section mt-4" *ngIf="mode === 'bulk' && (bulkResults.matchedPairs > 0 || bulkResults.unmatchedPairs > 0)">
+          <div class="row g-4 justify-content-center">
+            <div class="col-md-5">
+              <div class="score-box similarity-box text-center">
+                <p class="text-secondary mb-2">Matched Pairs</p>
+                <h3 class="text-primary">{{bulkResults.matchedPairs}}</h3>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="score-box confidence-box text-center">
+                <p class="text-secondary mb-2">Unmatched Pairs</p>
+                <h3 class="text-danger">{{bulkResults.unmatchedPairs}}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Face Outline Overlay -->
+    <div class="face-outline-overlay" *ngIf="showFaceOutline">
+      <div class="analysis-container">
+        <div class="face-outline">
+          <div class="scanning-line"></div>
+        </div>
+        
+        <div class="analysis-step-container">
+          <div class="current-step">{{currentAnalysisStep}}</div>
+          <div class="step-indicators">
+            <div *ngFor="let step of analysisSteps" 
+                 class="step-dot"
+                 [ngClass]="{'active': step === currentAnalysisStep}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

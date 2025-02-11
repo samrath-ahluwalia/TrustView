@@ -1,0 +1,155 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-black py-3 fixed-top">
+    <div class="container">
+      <a class="navbar-brand fs-4 fw-bold" href="#">TrustView</a>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+  <div class="container-fluid bg-black text-white">
+    <!-- Spacer div using rem instead of pixels -->
+    <div class="navbar-spacer"></div>
+    
+    <div class="container py-5">
+      <div class="row align-items-center min-dvh-80">
+        <!-- Left Column -->
+        <div class="col-lg-6 pe-lg-5">
+          <h1 class="display-3 fw-bold mb-2">
+            Advanced Face Check
+          </h1>
+          <h2 class="display-6 text-primary mb-4">
+            Examination Security
+          </h2>
+          <p class="lead mb-5 text-white">
+            Real-time biometric verification system ensuring examination integrity through advanced facial recognition and deduplication checks.
+          </p>
+        </div>
+        
+        <!-- Right Column - Feature Grid -->
+        <div class="col-md-6">
+            
+          <div class="row g-4">
+            <!-- 1:1 Verification -->
+            <div class="col-md-6">
+              <div class="p-4 bg-dark rounded-3 grid-card">
+                <h3 class="h5 mb-3">1:1 Verification</h3>
+                <p class="lead mb-0">Real-time image matching</p>
+              </div>
+            </div>
+            
+            <!-- Deduplication -->
+            <div class="col-md-6">
+              <div class="p-4 bg-dark rounded-3 grid-card">
+                <h3 class="h5 mb-3">Deduplication</h3>
+                <p class="lead mb-0">Multiple entry prevention</p>
+              </div>
+            </div>
+            
+            <!-- Twin Detection -->
+            <div class="col-md-6">
+              <div class="p-4 bg-dark rounded-3 grid-card">
+                <h3 class="h5 mb-3">Twin Detection</h3>
+                <p class="lead mb-0">Unique identity verification</p>
+              </div>
+            </div>
+            
+            <!-- 1:N Matching -->
+            <div class="col-md-6">
+              <div class="p-4 bg-dark rounded-3 grid-card">
+                <h3 class="h5 mb-3">1:N Matching</h3>
+                <p class="lead mb-0">Cross-shift verification</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container text-center my-5 mb-5 info-container dvh-70">
+    <h1 class="fw-bold">Advanced Verification Features</h1>
+    <p class="text-muted">Comprehensive security measures for examination integrity</p>
+
+    <div class="row g-4 mt-4">
+        <div class="col-md-3 mt-5">
+            <div class="p-4 bg-white feature-card">
+                <button class="try-now-btn btn btn-sm" (click)="O2ONavigate()">
+                    Try Now <i class="bi bi-arrow-up-right" ></i>
+                </button>
+                <div class="icon-box bg-primary text-white">
+                    <i class="bi bi-clipboard"></i>
+                </div>
+                <h5 class="fw-bold">Image Analysis</h5>
+                <p>Supports both 1:1 and bulk comparison of biometric desk images with application data for efficient verification.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 mt-5">
+            <div class="p-4 bg-white feature-card">
+                <button class="try-now-btn btn btn-sm"  (click)="deduplicationNavigate()">
+                    Try Now <i class="bi bi-arrow-up-right"></i>
+                </button>
+                <div class="icon-box bg-success text-white">
+                    <i class="bi bi-plus"></i>
+                </div>
+                <h5 class="fw-bold">Deduplication Checks</h5>
+                <p>Identifies duplicate applications by analyzing pairs, highlighting the maximum similarity within each pair.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 mt-5">
+            <div class="p-4 bg-white feature-card">
+                <button class="try-now-btn btn btn-sm" (click)="twinDetectionNavigate()">
+                    Try Now <i class="bi bi-arrow-up-right"></i>
+                </button>
+                <div class="icon-box bg-purple text-white">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <h5 class="fw-bold">Historic Data Analysis</h5>
+                <p>Detects matches from historical data, including records with the same names and different names for thorough verification.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 mt-5">
+            <div class="p-4 bg-white feature-card">
+                <button class="try-now-btn btn btn-sm" (click)="O2nNavigate()">
+                    Try Now <i class="bi bi-arrow-up-right"></i>
+                </button>
+                <div class="icon-box bg-danger text-white">
+                    <i class="bi bi-clipboard-check"></i>
+                </div>
+                <h5 class="fw-bold">Image Quality Check</h5>
+                <p>Evaluates image quality by identifying the number of blurred images, non-human faces, and masked individuals.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-dark text-light py-5 mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-10 text-center">
+        <h1 class="mb-2">Verification Process</h1>
+        <p class="text-secondary mb-5">Step-by-step security measures for examination integrity</p>
+  
+        <div class="timeline-container position-relative">
+          <div class="timeline-line"></div>
+  
+          <div *ngFor="let step of verificationSteps; let i = index" 
+               class="timeline-item row mb-5 align-items-center"
+               [class.flex-row-reverse]="i % 2 !== 0">
+  
+            <div class="col-md-5" [class.text-md-end]="i % 2 === 0" [class.text-md-start]="i % 2 !== 0">
+              <h3 class="text-primary mb-2">{{step.title}}</h3>
+              <p class="text-secondary">{{step.description}}</p>
+            </div>
+  
+            <div class="col-md-2 timeline-point">
+              <div class="point-circle">{{i + 1}}</div>
+            </div>
+  
+            <div class="col-md-5"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,27 @@
+.h-90{
+    height: 90%;
+}
+
+.dvh-90{
+    height: 90dvh;
+}
+
+.w-95{
+    width: 95%;
+}
+
+.w-100{
+    width: 100%;
+}
+
+.dvh-75{
+    height: 75dvh;
+}
+
+.dvh-70{
+    height:70vh;
+}
+
+.bg-darkblue{
+    background-color: #00091b;
+}

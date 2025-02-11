@@ -1,0 +1,496 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-black py-3 fixed-top">
+  <div class="container">
+    <a class="navbar-brand fs-4 fw-bold" href="#">TrustView</a>
+  </div>
+</nav>
+
+<div class="image-dedup mt-5">
+  <!-- Hero Section -->
+  <section class="hero min-vh-70 d-flex align-items-center">
+    <div class="container">
+      <div class="text-center">
+        <h1 class="display-4 fw-bold text-white animate__animated animate__fadeIn">
+          <span class="d-block">Image Deduplication with</span>
+          <span class="d-block text-primary gradient-text animate__animated animate__pulse animate__infinite">Facial Recognition</span>
+        </h1>
+        <p class="lead text-gray-300 mx-auto animate__animated animate__fadeIn animate__delay-1s">
+          Efficiently detect and manage duplicate images using advanced facial recognition technology.
+          Get quality scores and confidence metrics in real-time.
+        </p>
+        <div class="mt-5 d-flex justify-content-center gap-3 animate__animated animate__fadeIn animate__delay-2s">
+          <a href="#demo" class="btn btn-primary btn-lg px-4">Try Demo</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-accent"></div>
+    <div class="hero-accent hero-accent-2"></div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="howitworks" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold text-white animate__animated animate__fadeIn">
+          How It Works
+        </h2>
+        <p class="lead text-gray-300 animate__animated animate__fadeIn animate__delay-1s">
+          Simple 3-step process to detect and manage duplicate images
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4 animate__animated animate__fadeInUp">
+          <div class="card bg-dark text-white h-100">
+            <div class="card-body text-center">
+              <div class="display-4 text-primary mb-3">1</div>
+              <h3 class="card-title">Upload Reference Image</h3>
+              <div class="icon-wrapper">
+                <i class="fas fa-upload fa-2x text-primary"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-1s">
+          <div class="card bg-dark text-white h-100">
+            <div class="card-body text-center">
+              <div class="display-4 text-primary mb-3">2</div>
+              <h3 class="card-title">Add Comparison Images</h3>
+              <div class="icon-wrapper">
+                <i class="fas fa-images fa-2x text-primary"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-2s">
+          <div class="card bg-dark text-white h-100">
+            <div class="card-body text-center">
+              <div class="display-4 text-primary mb-3">3</div>
+              <h3 class="card-title">Get Results</h3>
+              <div class="icon-wrapper">
+                <i class="fas fa-check-circle fa-2x text-primary"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- Bulk Upload Section -->
+    <section class="py-5">
+      <div class="card bg-dark text-white">
+        <div class="card-body">
+          <h3 class="gradient-text mb-4 text-center">Bulk Image Upload</h3>
+          
+          <div class="upload-area" (click)="triggerBulkUpload()">
+            <input type="file" 
+                   #bulkInput 
+                   (change)="onBulkSelected($event)" 
+                   accept="image/*" 
+                   multiple 
+                   class="d-none">
+            
+            <ng-container *ngIf="!bulkPreviews.length">
+              <i class="fas fa-upload fa-3x text-gray-400"></i>
+              <p class="mt-3">Click to upload multiple images or drag and drop</p>
+            </ng-container>
+            
+            <ng-container *ngIf="bulkPreviews.length">
+              <div class="bulk-preview-grid">
+                <div *ngFor="let preview of bulkPreviews; let i = index" 
+                     class="preview-wrapper position-relative">
+                  <img [src]="preview" class="preview-thumbnail">
+                  <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1" 
+                          (click)="$event.stopPropagation(); removeBulkImage(i)">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="text-center mt-4">
+            <button class="btn btn-primary btn-lg" (click)="analyze()" [disabled]="!bulkPreviews.length">
+              Analyze Images
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section *ngIf="showResults" class="">
+      <div class="card bg-dark text-white">
+        <div class="card-body">
+          <h3 class="gradient-text mb-4 text-center">Analysis Results</h3>
+          
+          <div class="row g-4">
+            <div class="col-md-6">
+              <div class="result-container bg-dark p-4 rounded-lg border border-gray-700 text-center">
+                <h4 class="text-primary mb-3">Total Duplicate Pairs</h4>
+                <div class="d-flex align-items-baseline justify-content-center">
+                  <span class="display-4 fw-bold text-white">{{results.totalPairs}}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="result-container bg-dark p-4 rounded-lg border border-gray-700 text-center">
+                <h4 class="text-primary mb-3">Maximum Duplicates</h4>
+                <div class="d-flex align-items-baseline justify-content-center">
+                  <span class="display-4 fw-bold text-white">{{results.maxDuplicates}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Demo Section -->
+  <!-- <section id="demo" class="py-5 position-relative overflow-hidden">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold gradient-text animate__animated animate__fadeIn">
+          Try It Yourself
+        </h2>
+        <p class="lead text-gray-300 animate__animated animate__fadeIn animate__delay-1s">
+          Upload your images and see the deduplication in action
+        </p>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row mb-4 animate__animated animate__fadeInDown">
+          <div class="col-12 d-flex justify-content-center">
+            <div class="btn-group" role="group">
+              <button type="button" 
+                      class="btn" 
+                      [class.btn-primary]="mode === 'manual'"
+                      [class.btn-outline-primary]="mode !== 'manual'"
+                      (click)="setMode('manual')">
+                <i class="fas fa-hand-point-up me-2"></i>Manual Mode
+              </button>
+              <button type="button" 
+                      class="btn" 
+                      [class.btn-primary]="mode === 'bulk'"
+                      [class.btn-outline-primary]="mode !== 'bulk'"
+                      (click)="setMode('bulk')">
+                <i class="fas fa-boxes me-2"></i>Bulk Mode
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4" *ngIf="mode === 'manual'">
+          <div class="col-lg-6 animate__animated animate__fadeInLeft">
+            <div class="card bg-dark text-white hover-3d">
+              <div class="card-body">
+                <h3 class="gradient-text mb-4">Reference Image</h3>
+                <div class="upload-container">
+                  <div class="upload-area" (click)="triggerReferenceUpload()">
+                    <input type="file" 
+                           #referenceInput 
+                           (change)="onReferenceSelected($event)" 
+                           accept="image/*" 
+                           class="d-none">
+                    <ng-container *ngIf="!referencePreview">
+                      <i class="fas fa-upload fa-3x text-gray-400"></i>
+                      <p class="mt-3">Click to upload or drag and drop</p>
+                    </ng-container>
+                    <ng-container *ngIf="referencePreview">
+                      <div class="preview-wrapper position-relative">
+                        <img [src]="referencePreview" class="img-preview">
+                        <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2" 
+                                (click)="$event.stopPropagation(); clearReference()">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      
+          <div class="col-lg-6 animate__animated animate__fadeInRight">
+            <div class="card bg-dark text-white">
+              <div class="card-body">
+                <h3 class="gradient-text mb-4">Comparison Images</h3>
+                <div class="upload-area" (click)="triggerComparisonUpload()">
+                  <input type="file" 
+                         #comparisonInput 
+                         (change)="onComparisonSelected($event)" 
+                         accept="image/*" 
+                         multiple 
+                         class="d-none">
+                  <ng-container *ngIf="!comparisonPreviews.length">
+                    <i class="fas fa-upload fa-3x text-gray-400"></i>
+                    <p class="mt-3">Click to upload multiple images or drag and drop</p>
+                  </ng-container>
+                  <ng-container *ngIf="comparisonPreviews.length">
+                    <div class="comparison-preview-grid">
+                      <div *ngFor="let preview of comparisonPreviews; let i = index" 
+                           class="preview-wrapper position-relative">
+                        <img [src]="preview" class="preview-thumbnail">
+                        <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1" 
+                                (click)="$event.stopPropagation(); removeComparisonImage(i)">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="mode === 'bulk'">
+          <div class="col-12 mb-4">
+            <div class="card bg-dark text-white">
+              <div class="card-body">
+                <div class="d-flex justify-content-center mb-4">
+                  <div class="btn-group" role="group">
+                    <button type="button" 
+                            class="btn" 
+                            [class.btn-primary]="bulkUploadType === 'local'"
+                            [class.btn-outline-light]="bulkUploadType !== 'local'"
+                            (click)="setBulkUploadType('local')">
+                      <i class="fas fa-folder-open me-2"></i>Local Upload
+                    </button>
+                    <button type="button" 
+                            class="btn" 
+                            [class.btn-primary]="bulkUploadType === 's3'"
+                            [class.btn-outline-light]="bulkUploadType !== 's3'"
+                            (click)="setBulkUploadType('s3')">
+                      <i class="fab fa-aws me-2"></i>S3 Bucket
+                    </button>
+                  </div>
+                </div>
+
+                <div *ngIf="bulkUploadType === 'local'" class="animate__animated animate__fadeIn">
+                  <div class="upload-area" (click)="triggerBulkUpload()">
+                    <input type="file" 
+                           #bulkInput 
+                           (change)="onBulkSelected($event)" 
+                           accept="image/*" 
+                           multiple 
+                           class="d-none">
+                    <ng-container *ngIf="!bulkPreviews.length">
+                      <i class="fas fa-upload fa-3x text-gray-400"></i>
+                      <p class="mt-3">Upload multiple images to find duplicates</p>
+                      <p class="text-muted">Drag and drop or click to select files</p>
+                    </ng-container>
+                    <ng-container *ngIf="bulkPreviews.length">
+                      <div class="bulk-preview-grid">
+                        <div *ngFor="let preview of bulkPreviews; let i = index" 
+                             class="preview-wrapper position-relative">
+                          <img [src]="preview" class="preview-thumbnail">
+                          <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1" 
+                                  (click)="$event.stopPropagation(); removeBulkImage(i)">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div *ngIf="bulkUploadType === 's3'" class="animate__animated animate__fadeIn">
+                  <form class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label">Access Key ID</label>
+                      <input type="text" 
+                             class="form-control"
+                             [(ngModel)]="s3Config.accessKeyId"
+                             name="accessKeyId"
+                             placeholder="Enter your AWS access key ID">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Secret Access Key</label>
+                      <input type="password" 
+                             class="form-control"
+                             [(ngModel)]="s3Config.secretAccessKey"
+                             name="secretAccessKey"
+                             placeholder="Enter your AWS secret access key">
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Bucket Name</label>
+                      <input type="text" 
+                             class="form-control"
+                             [(ngModel)]="s3Config.bucketName"
+                             name="bucketName"
+                             placeholder="Enter S3 bucket name">
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Region</label>
+                      <input type="text" 
+                             class="form-control"
+                             [(ngModel)]="s3Config.region"
+                             name="region"
+                             placeholder="e.g., us-east-1">
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Path</label>
+                      <input type="text" 
+                             class="form-control"
+                             [(ngModel)]="s3Config.path"
+                             name="path"
+                             placeholder="e.g., images/">
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                      <button class="btn btn-primary" 
+                              (click)="loadImagesFromS3()"
+                              [disabled]="isLoadingS3">
+                        <i class="fas" [class.fa-sync-alt]="isLoadingS3" [class.fa-cloud-download-alt]="!isLoadingS3"></i>
+                        <span class="ms-2">{{ isLoadingS3 ? 'Loading...' : 'Load Images from S3' }}</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mt-4">
+        <div class="col-12 animate__animated animate__fadeInUp">
+          <div class="card bg-dark text-white">
+            <div class="card-body">
+              <h3 class="gradient-text mb-4 text-center">Results</h3>
+              <h3 class="gradient-text mb-4 text-center" *ngIf="showResults && mode === 'manual'">Duplicates Found: {{totalDuplicates}}</h3>
+              
+              <div *ngIf="showResults && mode === 'manual'" class="row">
+                <div class="col-12">
+                  <div class="comparison-results-grid">
+                    <div *ngFor="let result of manualResults; let i = index" 
+                         class="comparison-result-item p-3 border border-secondary rounded mb-3">
+                      <div class="d-flex align-items-start gap-4">
+                        <div class="comparison-image-container">
+                          <img [src]="comparisonPreviews[i]" 
+                               class="img-fluid rounded" 
+                               [alt]="'Comparison image ' + (i + 1)">
+                        </div>
+                        
+                        <div class="metrics-container flex-grow-1">
+                          <div class="mb-3">
+                            <h5 class="text-gray-300">Similarity Score</h5>
+                            <div class="progress bg-dark">
+                              <div class="progress-bar" 
+                                   [ngClass]="getSimilarityColor(result.similarity)"
+                                   role="progressbar" 
+                                   [style.width]="result.similarity + '%'"
+                                   [attr.aria-valuenow]="result.similarity" 
+                                   aria-valuemin="0" 
+                                   aria-valuemax="100">
+                                {{result.similarity}}%
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <h5 class="text-gray-300">Match Status</h5>
+                            <span class="badge" 
+                                  [class.bg-success]="result.matched" 
+                                  [class.bg-danger]="!result.matched">
+                              {{result.matched ? 'Matched' : 'Not Matched'}}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div *ngIf="showResults && mode === 'bulk'" class="row g-4">
+                <div class="col-md-4">
+                  <div class="result-container p-4 rounded-lg border border-gray-700 transition-all duration-300 hover:shadow-glow">
+                    <h4 class="text-primary mb-3 text-xl font-semibold">Total Duplicates</h4>
+                    <div class="d-flex align-items-baseline">
+                      <span class="text-3xl font-bold text-white">{{results.totalDuplicates}}</span>
+                      <span class="text-gray-400 ms-2">files</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-md-4">
+                  <div class="result-container p-4 rounded-lg border border-gray-700 transition-all duration-300 hover:shadow-glow">
+                    <h4 class="text-primary mb-3 text-xl font-semibold">Same Name Duplicates</h4>
+                    <div class="d-flex align-items-baseline">
+                      <span class="text-3xl font-bold text-white">{{results.sameNameDuplicates}}</span>
+                      <span class="text-gray-400 ms-2">files</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-md-4">
+                  <div class="result-container p-4 rounded-lg border border-gray-700 transition-all duration-300 hover:shadow-glow">
+                    <h4 class="text-primary mb-3 text-xl font-semibold">Different Name Duplicates</h4>
+                    <div class="d-flex align-items-baseline">
+                      <span class="text-3xl font-bold text-white">{{results.differentNameDuplicates}}</span>
+                      <span class="text-gray-400 ms-2">files</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-12 text-center mt-4">
+                  <button class="btn btn-outline-primary btn-lg" (click)="downloadReport()">
+                    <i class="fas fa-file-download me-2"></i>Download Detailed Report
+                  </button>
+                </div>
+              </div>
+              
+              <div *ngIf="!showResults" class="text-gray-400 text-center">
+                Upload images to see deduplication results
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button class="btn btn-primary btn-lg" [disabled]="!canAnalyze" (click)="analyze()" *ngIf="!(mode === 'bulk' && bulkUploadType === 's3')">Analyze Images</button>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Loading Animation -->
+  <div class="face-outline-overlay" *ngIf="showFaceOutline">
+    <div class="analysis-container">
+      <div class="face-outline">
+        <div class="scanning-line"></div>
+      </div>
+      
+      <div class="analysis-step-container">
+        <div class="current-step">{{currentAnalysisStep}}</div>
+        <div class="step-indicators">
+          <div *ngFor="let step of analysisSteps" 
+               class="step-dot"
+               [class.active]="step === currentAnalysisStep">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isProcessing" class="processing-overlay">
+  <div class="face-scan-container">
+    <img src="/twin.png" alt="Face Outline" class="face-outline">
+    <div class="green-line"></div>
+    <div class="analysis-step-container">
+      <div class="current-step">{{currentAnalysisStep}}</div>
+      <div class="step-indicators">
+        <div *ngFor="let step of analysisSteps" 
+             class="step-dot"
+             [ngClass]="{'active': step === currentAnalysisStep}">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
