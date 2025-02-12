@@ -9,7 +9,7 @@ body {
   display: block;
   background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
   min-height: 100vh;
-  padding: 2rem;
+  padding: 0;
 }
 
 /* Card Styles */
